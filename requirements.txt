@@ -2,3 +2,4 @@ requests
 google
 bs4
 beautifulsoup4
+py-dto
