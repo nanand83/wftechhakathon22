@@ -1,2 +1,4 @@
 requests
+google
+bs4
 beautifulsoup4
