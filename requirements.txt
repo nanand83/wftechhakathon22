@@ -3,3 +3,6 @@ google
 bs4
 beautifulsoup4
 py-dto
+openpyxl
+pandas
+typing

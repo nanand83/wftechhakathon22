@@ -1,7 +1,14 @@
 from py_dto import DTO
 from teammember import TeamMember
+from typing import Optional
+
+
 class CompanyProfile(DTO):
+    dunsNum: str
     name: str
     website: str
-    address: str
+    address: Optional[str]
     team : list[TeamMember]
+    certifications: list[str]
+    status: str
+    lastUpdated: Optional[str]
