@@ -9,7 +9,7 @@ cx = 'e54032988e341ae22'
 url = 'https://customsearch.googleapis.com/customsearch/v1'
 
 headers = {
-    'Accept' : 'application/json'
+    'Accept' : 'application/json',
 }
 
 query_params = {
