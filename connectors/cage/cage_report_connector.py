@@ -1,7 +1,7 @@
-from base_scraper import BaseScraper
+from base_connector import BaseConnector
 
 
-class CageReportScraper(BaseScraper):
+class CageReportConnector(BaseConnector):
     base_url = 'https://cage.report/DUNS'
 
     def __init__(self):
@@ -17,5 +17,5 @@ class CageReportScraper(BaseScraper):
 
 
 if __name__ == "__main__":
-    c = CageReportScraper()
+    c = CageReportConnector()
     print (c.scrape('806933284'))

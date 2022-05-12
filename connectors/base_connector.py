@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-class BaseScraper:
+class BaseConnector:
     def __init__(self, base_url):
         self.base_url = base_url
 
