@@ -43,4 +43,10 @@ def extractWeblinks(url):
     soup = BeautifulSoup(reqs.text, 'html.parser')
     urls = []
     for link in soup.find_all('a'):
-        print(link.get('href'))
+        if  "award" in  link.get('href').lower():
+            if link.get('href') not in urls:
+                urls.append(link.get('href'))
+        #if "about" in link.get('href').lower() or  "story" in link.get('href').lower():
+        #    if link.get('href') not in urls:
+        #        urls.append(link.get('href'))
+    return urls
