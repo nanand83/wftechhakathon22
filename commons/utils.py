@@ -1,4 +1,5 @@
 import requests
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import random
 import html2text
@@ -36,29 +37,6 @@ def extract_text_from_url(url):
     soup = BeautifulSoup(reqs.text, 'lxml')
     htmltext = soup.encode('utf-8').decode('utf-8', 'ignore')
     return  html2text.html2text(htmltext)
-
-
-def extract_web_links_from_url(url):
-    #parsed_uri = urlparse(url)
-    #domainname = parsed_uri.netloc.split(".")[-2:]
-    #domain = 'http://'+".".join(domainname)
-    #print(domainname)
-    reqs = requests.get(url, headers=get_headers())
-    #print(reqs)
-    soup = BeautifulSoup(reqs.text, 'html.parser')
-    urls = []
-    for link in soup.find_all('a'):
-        if link.get('href') is not None:
-            if "director" in  link.get('href').lower() or  "team"  in  link.get('href').lower():
-                if link.get('href') not in urls:
-                    weblink = link.get('href');
-                    if domain not in link.get('href'):
-                        weblink = domain+link.get('href')
-                    urls.append(weblink)
-            #if "about" in link.get('href').lower() or  "story" in link.get('href').lower():
-            #    if link.get('href') not in urls:
-            #        urls.append(link.get('href'))
-   return urls
 
 
 def get_headers():

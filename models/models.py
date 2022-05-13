@@ -3,10 +3,12 @@ from spacy.training import Example
 from spacy_utils import convert_annotations_to_training_data
 from ethnicolr import pred_wiki_ln, pred_wiki_name
 import random
+import pandas as pd
+import os
 
 
 class DiversityModel:
-    output_base_dir = 'outputs'
+    output_base_dir = '/'.join([os.path.dirname(__file__), 'outputs'])
     n_iter = 10
     nlp = None
 
@@ -76,11 +78,14 @@ class EthnicityOTSModel(DiversityModel):
     def train_from_annotations(self, data):
         raise Exception("Unsupported for Off-the-shelf model")
     
-    def predict_batch(self, names, name_col='name'):
-        names_list = [{'name' : name} for name in names]
+    def predict_batch_by_lastname(self, names, name_col='name'):
+        names_list = [{'name' : sanitize(name)} for name in names]
+        print (names_list)
         df = pd.DataFrame(names_list)
         return pred_wiki_ln(df, name_col)
 
+def sanitize(name):
+    return ''.join([x for x in name if x == ' ' or x.isalnum()])
 
 if __name__ == "__main__":
     a = AwardsModel()
@@ -88,4 +93,4 @@ if __name__ == "__main__":
     #a.predict_single("Top 50 Houston Fastest Growing Woman-Owned Businesses – Houston Business Journal")
 
     b = EthnicityOTSModel()
-    print(b.predict_batch(['Anand','Dinesh']))
+    print(b.predict_batch_by_lastname(['Dinesh','Anand','Gokul','Katherine']))
