@@ -21,4 +21,4 @@ def extractWeblink(weblinks):
         doc = nlp_updated(extractedText)
         print("Entities", [(ent.text, ent.label_) for ent in doc.ents])
 
-extractWeblink(callGetWebLinks(callGoogleSearch('Essex Group Management Corp.')))
+extractWeblink(callGetWebLinks(callGoogleSearch('EXECUTEAM CORPORATION')))

@@ -71,6 +71,5 @@ with nlp.disable_pipes(*other_pipes):  # only train NER
         print(losses)
     nlp.to_disk("output/"+filename)
 
-
 doc = nlp("Top 50 Houston Fastest Growing Woman-Owned Businesses – Houston Business Journal.")
 print("Entities", [(ent.text, ent.label_) for ent in doc.ents])

@@ -4,3 +4,6 @@ bs4
 beautifulsoup4
 py-dto
 html2text
+lxml
+ethnicolr
+pandas
