@@ -33,9 +33,9 @@ user_agent_list = [
 user_agent = random.choice(user_agent_list)
 #Set the headers
 headers = {'User-Agent': user_agent}
-
+#payload = {'api_key': 'edecf5b4d1d8831d0a8a487ff2880384', 'url': 'https://httpbin.org/ip'}
 def extractData(url):
+    #reqs = requests.get(url, headers=headers , params=payload)
     reqs = requests.get(url, headers=headers)
     soup = BeautifulSoup(reqs.text, 'html.parser')
-    print('=============='+url+'=============================')
-    print(soup.get_text(strip=True));
+    return soup.get_text(strip=True);

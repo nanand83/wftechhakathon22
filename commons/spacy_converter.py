@@ -1,14 +1,11 @@
 import json
-import spacy
-import random
-from pathlib import Path
 import random
 from pathlib import Path
 import spacy
 from spacy.training import Example
-from tqdm import tqdm
 
-fo = open("admin.jsonl", "r")
+filename = 'awards'
+fo = open(filename+".jsonl", "r")
 TRAIN_DATA = []
 lines = fo.readlines()
 print(len(lines))
@@ -72,7 +69,7 @@ with nlp.disable_pipes(*other_pipes):  # only train NER
             example = Example.from_dict(doc, entity_offsets)
             nlp.update([example], sgd=optimizer)
         print(losses)
-    nlp.to_disk("output")
+    nlp.to_disk("output/"+filename)
 
 
 doc = nlp("Top 50 Houston Fastest Growing Woman-Owned Businesses – Houston Business Journal.")

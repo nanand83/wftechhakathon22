@@ -33,6 +33,7 @@ user_agent_list = [
 user_agent = random.choice(user_agent_list)
 #Set the headers
 headers = {'User-Agent': user_agent}
+#payload = {'api_key': 'edecf5b4d1d8831d0a8a487ff2880384', 'url': 'https://httpbin.org/ip'}
 
 def extractWeblinks(url):
     parsed_uri = urlparse(url)
@@ -43,10 +44,11 @@ def extractWeblinks(url):
     soup = BeautifulSoup(reqs.text, 'html.parser')
     urls = []
     for link in soup.find_all('a'):
-        if  "award" in  link.get('href').lower():
-            if link.get('href') not in urls:
-                urls.append(link.get('href'))
-        #if "about" in link.get('href').lower() or  "story" in link.get('href').lower():
-        #    if link.get('href') not in urls:
-        #        urls.append(link.get('href'))
+        if link.get('href') is not None:
+            if "award" in  link.get('href').lower() or  "certification"  in  link.get('href').lower():
+                if link.get('href') not in urls:
+                    urls.append(link.get('href'))
+            #if "about" in link.get('href').lower() or  "story" in link.get('href').lower():
+            #    if link.get('href') not in urls:
+            #        urls.append(link.get('href'))
     return urls
