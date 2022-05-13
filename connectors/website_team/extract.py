@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse
 import random
-
+import html2text
 user_agent_list = [
 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15',
 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0',
@@ -37,5 +36,6 @@ headers = {'User-Agent': user_agent}
 def extractData(url):
     #reqs = requests.get(url, headers=headers , params=payload)
     reqs = requests.get(url, headers=headers)
-    soup = BeautifulSoup(reqs.text, 'html.parser')
-    return soup.get_text(strip=True);
+    soup = BeautifulSoup(reqs.text, 'lxml')
+    htmltext = soup.encode('utf-8').decode('utf-8', 'ignore')
+    return  html2text.html2text(htmltext)

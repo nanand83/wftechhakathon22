@@ -34,8 +34,25 @@ user_agent = random.choice(user_agent_list)
 #Set the headers
 headers = {'User-Agent': user_agent}
 #payload = {'api_key': 'edecf5b4d1d8831d0a8a487ff2880384', 'url': 'https://httpbin.org/ip'}
-def extractData(url):
-    #reqs = requests.get(url, headers=headers , params=payload)
+
+def extractWeblinks(url):
+    parsed_uri = urlparse(url)
+    domainname = parsed_uri.netloc.split(".")[-2:]
+    domain = 'http://'+".".join(domainname)
+    print(domainname)
     reqs = requests.get(url, headers=headers)
+    print(reqs)
     soup = BeautifulSoup(reqs.text, 'html.parser')
-    return soup.get_text(strip=True);
+    urls = []
+    for link in soup.find_all('a'):
+        if link.get('href') is not None:
+            if "director" in  link.get('href').lower() or  "team"  in  link.get('href').lower():
+                if link.get('href') not in urls:
+                    weblink = link.get('href');
+                    if domain not in link.get('href'):
+                        weblink = domain+link.get('href')
+                    urls.append(weblink)
+            #if "about" in link.get('href').lower() or  "story" in link.get('href').lower():
+            #    if link.get('href') not in urls:
+            #        urls.append(link.get('href'))
+    return urls
