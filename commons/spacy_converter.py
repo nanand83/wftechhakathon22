@@ -5,6 +5,7 @@ from pathlib import Path
 import random
 from pathlib import Path
 import spacy
+from spacy.training import Example
 from tqdm import tqdm
 
 fo = open("admin.jsonl", "r")
@@ -66,11 +67,13 @@ with nlp.disable_pipes(*other_pipes):  # only train NER
     for itn in range(n_iter):
         random.shuffle(TRAIN_DATA)
         losses = {}
-        for text, annotations in tqdm(TRAIN_DATA):
-            nlp.update(
-                [text],
-                [annotations],
-                drop=0.5,
-                sgd=optimizer,
-                losses=losses)
+        for raw_text, entity_offsets in TRAIN_DATA:
+            doc = nlp.make_doc(raw_text)
+            example = Example.from_dict(doc, entity_offsets)
+            nlp.update([example], sgd=optimizer)
         print(losses)
+    nlp.to_disk("output")
+
+
+doc = nlp("Top 50 Houston Fastest Growing Woman-Owned Businesses – Houston Business Journal.")
+print("Entities", [(ent.text, ent.label_) for ent in doc.ents])
