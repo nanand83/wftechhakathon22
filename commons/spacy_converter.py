@@ -48,9 +48,11 @@ else:
     nlp = spacy.blank('en')
     print("Created blank 'en' model")
 
+#set up the pipeline
+
 if 'ner' not in nlp.pipe_names:
     ner = nlp.create_pipe('ner')
-    nlp.add_pipe(ner, last=True)
+    nlp.add_pipe("ner", last=True)
 else:
     ner = nlp.get_pipe('ner')
 
