@@ -4,6 +4,7 @@ bs4
 beautifulsoup4
 py-dto
 html2text
+spacy
 lxml
 ethnicolr
 pandas
