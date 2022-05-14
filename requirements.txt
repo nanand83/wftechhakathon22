@@ -3,6 +3,9 @@ google
 bs4
 beautifulsoup4
 py-dto
+openpyxl
+pandas
+typing
 html2text
 spacy
 lxml
