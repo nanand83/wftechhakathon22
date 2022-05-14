@@ -1,6 +1,6 @@
 from commons.google_search_wrapper import do_search_only10
 from commons import utils
-from models import AwardsModel
+from models.models import AwardsModel
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import requests
