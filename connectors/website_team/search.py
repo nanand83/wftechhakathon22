@@ -1,5 +1,5 @@
 from commons.google_search_wrapper import do_search_only10
-from models import EthnicityOTSModel
+from models.models import EthnicityOTSModel
 from commons import utils
 import spacy
 from urllib.parse import urlparse
@@ -43,8 +43,6 @@ def extract(company_name):
             for ent in doc.ents:
                if 'PERSON' in ent.label_:
                    names_detected.append(ent.text)
-    
-
             print (names_detected)
             result = EthnicityOTSModel().predict_batch_by_lastname(names_detected)
             print(result)
@@ -52,4 +50,5 @@ def extract(company_name):
     return None
 
 
-extract('Jenzabar, Inc.')
+extract('Ologie, LLC')
+

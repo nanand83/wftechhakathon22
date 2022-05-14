@@ -41,5 +41,14 @@ def extract_text_from_url(url):
 
 def get_headers():
     user_agent = random.choice(user_agent_list)
-    return {'User-Agent': user_agent}
+    return {'User-Agent': user_agent,
+            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'sec-fetch-site': 'none',
+            'sec-fetch-mode': 'navigate',
+            'sec-fetch-user': '?1',
+            'sec-fetch-dest': 'document',
+            'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+            'dnt': '1',
+            'upgrade-insecure-requests': '1'
+            }
 

@@ -8,3 +8,7 @@ spacy
 lxml
 ethnicolr
 pandas
+selenium
+webdriver-manager
+scikit_learn==0.22.2.post1
+
