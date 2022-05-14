@@ -6,3 +6,7 @@ py-dto
 openpyxl
 pandas
 typing
+html2text
+spacy
+lxml
+ethnicolr
