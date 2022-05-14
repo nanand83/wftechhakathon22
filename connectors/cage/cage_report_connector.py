@@ -13,9 +13,16 @@ class CageReportConnector(BaseConnector):
     def process_soup(self):
         keys = self.get_divs_with_class('profilehead')
         values = self.get_divs_with_class('profileinfo')
-        return dict(zip(keys, values))
+        tmp_map = dict(zip(keys, values))
+
+        ##Names
+        names_content = self.get_divs_with_class('indent_same_as_profilehead')
+        if names_content:
+            tmp_map['names'] = names_content[1].split('\\n')
+
+        return tmp_map
 
 
 if __name__ == "__main__":
     c = CageReportConnector()
-    print (c.scrape('806933284'))
+    print (c.scrape('45097789'))
