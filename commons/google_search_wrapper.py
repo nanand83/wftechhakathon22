@@ -7,6 +7,8 @@ cx = 'e54032988e341ae22'
 
 #Statics
 url = 'https://customsearch.googleapis.com/customsearch/v1'
+site_restricted_url = 'https://www.googleapis.com/customsearch/v1/siterestrict'
+
 
 headers = {
     'Accept' : 'application/json',
@@ -41,8 +43,39 @@ def do_search_only10(query):
 
     return None
 
+'''
+Uses Site Restricted Search (SRS) JSON API and performs Google Search for incoming query and returns top 10 results.
+Args:
+    query term to search for
+Returns:
+    List of dict of results
+    None if no results found
+'''
+def do_search_only10_srs(query, domain):
+    query_params = {
+        'siteSearchFilter' : 'i'
+    }
 
-def do_search_only10(query,query_params):
+    query_params['q'] = query
+    query_params['siteSearchFilter'] = 'i'
+    query_params['siteSearch'] = domain
+
+    try:
+        resp = requests.get(site_restricted_url, headers=headers, params=query_params)
+        if resp.ok:
+            resp_json = resp.json()
+            if 'items' in resp_json:
+                return resp_json['items']
+        else:
+            print ("Failed for query ", query)
+    except Exception as ex:
+        print ("Something went wrong with search: ", ex)
+
+    return None
+
+
+
+def do_search_only10_v2(query,query_params):
     query_params['q'] = query
     try:
         resp = requests.get(url, headers=headers, params=query_params)

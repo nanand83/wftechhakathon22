@@ -1,6 +1,6 @@
 import spacy
 from spacy.training import Example
-from .spacy_utils import convert_annotations_to_training_data
+from spacy_utils import convert_annotations_to_training_data
 from ethnicolr import pred_wiki_ln, pred_wiki_name
 import random
 import pandas as pd

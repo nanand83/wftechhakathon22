@@ -8,7 +8,7 @@ class CompanyProfile(DTO):
     name: str
     website: str
     address: Optional[str]
-    team : list[str]
+    team : list[TeamMember]
     certifications: list[str]
     status: str
     lastUpdated: Optional[str]
