@@ -9,10 +9,12 @@ import sys
 
 def get_team_members(lst):
     tms = [{'name': x, 'gender': '', 'ethnicity': ''} for x in lst]
-    print (tms)
     return tms
 
 def convert_to_dto(duns_num, incoming_dict):
+    if not incoming_dict:
+        incoming_dict = dict()
+
     c = CompanyProfile({
             'dunsNum' : duns_num,
             'name' : incoming_dict.get('Name of Firm', None),
@@ -24,6 +26,19 @@ def convert_to_dto(duns_num, incoming_dict):
             'lastUpdated' : incoming_dict.get('This profile was last updated', None)
         })
     return c
+
+def extract_company_profile_single(d):
+    c = CageReportConnector()
+    try:
+        tmp_dict = c.scrape(d)
+        return convert_to_dto(d, tmp_dict)
+        ##time.sleep(1)
+    except Exception as ex:
+        print (ex)
+        print ("Ignoring for: ", d)
+        
+
+    return None
 
 
 def extract_company_profile(duns_numbers):
