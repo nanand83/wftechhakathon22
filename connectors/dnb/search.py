@@ -19,7 +19,9 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
 chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('user-agent={0}'.format(random.choice(utils.user_agent_list)))
+#chrome_options.add_argument('user-agent={0}'.format(random.choice(utils.user_agent_list)))
+#chrome_options.add_argument('user-agent={0}'.format('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'))
+chrome_options.add_argument('user-agent={0}'.format('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36'))
 chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_argument('--disable-blink-features=AutomationControlled')
 chrome_options.add_experimental_option('useAutomationExtension', False)
@@ -65,7 +67,7 @@ def extract_entities(companywithaddress):
 
 
 def extract_html(url):
-    #time.sleep(3)
+    time.sleep(2)
     driver =webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
     search_url = url
     driver.get(search_url)
@@ -74,8 +76,6 @@ def extract_html(url):
     tries = 0
     max_tries = 6
     while (driver.title.lower() == "access denied" and tries < max_tries):
-        driver.quit()
-        driver =webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
         driver.get(search_url)
         tries += 1
         time.sleep(2)
@@ -83,6 +83,7 @@ def extract_html(url):
     print (driver.title.lower())
     if driver.title.lower() == "access denied":
         print ("Unable to extract for ", url)
+        driver.quit()
         return output_list
 
 
