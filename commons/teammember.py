@@ -3,6 +3,5 @@ from typing import Optional
 
 class TeamMember(DTO):
     name: Optional[str]
-    role: Optional[str]
     gender: Optional[str]
-    ethnic: Optional[str]
+    ethnicity: Optional[str]
