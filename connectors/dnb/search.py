@@ -34,7 +34,7 @@ def extractWeblinks(url):
     #domain = '{uri.netloc}/'.format(uri=parsed_uri)
     #print(domain)
     reqs = requests.get(url, headers=utils.get_headers())
-    print(reqs)
+    #print(reqs)
     soup = BeautifulSoup(reqs.text, 'html.parser')
     urls = []
     for link in soup.find_all('a'):
@@ -80,7 +80,7 @@ def extract_html(url):
         tries += 1
         time.sleep(2)
     
-    print (driver.title.lower())
+    print ("Page Title:", driver.title.lower())
     if driver.title.lower() == "access denied":
         print ("Unable to extract for ", url)
         driver.quit()
@@ -100,11 +100,12 @@ def extract_html(url):
             'ethnicity': identifyEthinicity(data[0])
         })
     driver.quit()
+    #print ("Output list is ", output_list)
     return output_list
 
 
 if __name__ == "__main__":
-    print(extract_html('https://www.dnb.com/business-directory/company-profiles.skillnet_solutions_inc.70f4f1134a7ed06c700c4d197b4a0eaf.html'))
+    extract_html('https://www.dnb.com/business-directory/company-profiles.skillnet_solutions_inc.70f4f1134a7ed06c700c4d197b4a0eaf.html')
     #extract_entities('Premier Oil & Gas Inc')
     #driver.get('https://google.com')
     #print (driver.title)
