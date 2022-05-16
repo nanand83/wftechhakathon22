@@ -12,17 +12,19 @@ def convert_to_dto(each_row, url, incoming_list):
                 'dunsNum' : each_row['dunsNum'],
                 'name' : each_row['dunsName'],
                 'website' : url,
-                'address' : None,
-                'team' : [TeamMember(x) for x in incoming_list],
-                'certifications' : list(),
-                'status' : None,
-                'lastUpdated' : None
+                'address' : '',
+                'team' : incoming_list,
+                'certifications' : [],
+                'status' : '',
+                'lastUpdated' : '' 
             })
-    return c
+        return c
+    else:
+        return None
 
 
 def get_dnb_url(company_name):
-    time.sleep(1)
+    #time.sleep(1)
     #results = do_search_only10_srs(company_name, 'https://www.dnb.com/')
     results = do_search_only10(company_name + ' DNB Business Directory')
     
@@ -35,16 +37,35 @@ def get_dnb_url(company_name):
 
 #print (get_dnb_url('Russell Transport, Inc.'))
 
-def extract_company_profile(df):
+def extract_company_profile_row(each_row):
     company_profiles = []
-    for idx, each_row in df.iterrows():
+    try:
         dnb_url = get_dnb_url(each_row['dunsName'])
-        if dnb_url and dnb_url != 'https://www.dnb.com':
+        if dnb_url and dnb_url != 'https://www.dnb.com/':
             dnb_data = extract_html(dnb_url)
             company_profiles.append(convert_to_dto(each_row, dnb_url, dnb_data))
         
         ##time.sleep(1)
         print ("-------------------Done extracting for ", each_row['dunsName'])
+    except:
+        print ("Ignoring") 
+
+    return company_profiles
+
+
+def extract_company_profile(df):
+    company_profiles = []
+    for idx, each_row in df.iterrows():
+        try:
+            dnb_url = get_dnb_url(each_row['dunsName'])
+            if dnb_url and dnb_url != 'https://www.dnb.com/':
+                dnb_data = extract_html(dnb_url)
+                company_profiles.append(convert_to_dto(each_row, dnb_url, dnb_data))
+            
+            ##time.sleep(1)
+            print ("-------------------Done extracting for ", each_row['dunsName'])
+        except:
+            print ("Ignoring for idx:", str(idx))
 
     return company_profiles
 
@@ -59,6 +80,7 @@ if __name__ == "__main__":
     company_profiles = extract_company_profile(df)
     dnb_df = pd.DataFrame(columns=CompanyProfile.__annotations__.keys())
     for c in company_profiles:
-        dnb_df = dnb_df.append(c.__dict__, ignore_index=True)
+        if c is not None:
+            dnb_df = dnb_df.append(c.__dict__, ignore_index=True)
 
     dnb_df.to_csv('data/dnb_report_company_profile_{0}_{1}.csv'.format(start, end), index=False)
