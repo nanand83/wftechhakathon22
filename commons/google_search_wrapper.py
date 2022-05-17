@@ -2,8 +2,8 @@ import requests
 from googlesearch import search
 
 #Keys
-api_key = 'AIzaSyDjOAgYbw_ixUU6fX4l7wwAaO1oYpxydB0'
-cx = 'e54032988e341ae22'
+api_key = 'xxxxxxxxxxxxxxxxxxxx'
+cx = 'xxxxxxxxxxxxxxxxxx'
 
 #Statics
 url = 'https://customsearch.googleapis.com/customsearch/v1'
